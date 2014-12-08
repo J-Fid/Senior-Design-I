@@ -28,3 +28,4 @@ void Point::setCoords(int xcord, int ycord){
 	x = xcord;
 	y = ycord;
 }
+

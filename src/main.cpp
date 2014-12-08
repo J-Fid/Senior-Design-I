@@ -29,7 +29,7 @@ int main(int argc, char** argv){
 	//load the image
 	Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	int mode = atoi(argv[2]); 
-	int robotHeight = 108, robotWidth = 75;
+	int robotHeight = 75, robotWidth = 110;
 
 	//if the image is not found, exit program
 	if(img.empty()){
@@ -51,6 +51,7 @@ int main(int argc, char** argv){
 
 	//process the image
 	Drawing* drawing = imageProcessor.processImage(img);
+	//std::cout << "numlines =  " << drawing->getLines().size();
 
 	//write image dimensions to CLI
 	Size imgSize = img.size();
@@ -76,12 +77,12 @@ int main(int argc, char** argv){
 		printf("Error clearing black image.\n");
 	}
 	
-	//std::cout << "press any key to quit\n";
+	std::cout << "press any key to quit\n";
 
 	//crashes program vvvvv
 	///////////////////////////
-	//int c;
-	//std::cin >> c; 
+	int c;
+	std::cin >> c; 
 	//////////////////
 
 	//shut down robot

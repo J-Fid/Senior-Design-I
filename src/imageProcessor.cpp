@@ -36,6 +36,11 @@ Drawing* ImageProcessor::processImage(cv::Mat & image){
 	//detect any straight lines in the image
 	cv::vector<cv::Vec4i> lines = lineDetection(image);
 
+	for(int i = 0; i < (int)lines.size(); i++){
+		cv::Vec4i line = lines[i];
+		printf("(%i, %i)->(%i, %i)\n", line[0], line[1], line[2], line[3]);
+	}
+
 	//detect contours
 	cv::vector< cv::vector<cv::Point> > contours;
 	cv::vector<cv::Vec4i> hierarchy;

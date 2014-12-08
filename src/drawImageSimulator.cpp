@@ -77,7 +77,8 @@ void drawImageSimulator::drawPic(Drawing* drawing, int robotHeight, int robotWid
 
 	//show the image
 	cv::imshow("Robot Simulated Image", img);
-	cv::waitKey(0);
+
+	cv::waitKey(100);
 
 }
 /**

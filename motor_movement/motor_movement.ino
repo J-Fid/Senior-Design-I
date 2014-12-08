@@ -11,7 +11,7 @@ char input;
 char buff[5], ack ='0';
 int points[5] ; 
 int previouspoint[2] = {0,0};
-int testPoints[4] = {10,10,100,100};
+int testPoints[4] = { 50,50,90,90};
 int p, b, num, j;
 
 Robot robot; //TESTING OUT MODEL OBJECT

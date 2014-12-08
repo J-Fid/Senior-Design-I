@@ -2,8 +2,8 @@
   Robot.cpp - Library for Robot object to control arm outside of main
   Created November 17, 2014
   Released into the public domain.
-
 */
+
 
 #include <BioloidController.h>
 #include <ax12.h>
@@ -160,16 +160,16 @@ void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 	q2_2 = acos((l1*l1 - l2*l2 + B2*B2)/(2*l1*B2)); //the law of cosines         
 	Q1_1 = q2_1 - degrees(q1_1);     
 	Q1_2 = q2_2 - degrees(q1_2) ;                                   
-	Q2_1 = degrees(acos((l1*l1 + l2*l2 - B*B)/(2*l1*l2))) +90;//the law of cosines    
+	Q2_1 = degrees(acos((l1*l1 + l2*l2 - B*B)/(2*l1*l2)))+90 ;//the law of cosines    
 	Q2_2 = degrees(acos((l1*l1 + l2*l2 - B2*B2)/(2*l1*l2)));//the law of cosines    
 	
 	//prevousCoord[0] = points[2];
 	//prevousCoord[0] = points[3];
 
-	points[0] = previousMotorAngle[0] - Q1_1; 
-	points[1] = previousMotorAngle[1] - Q2_1;
-	points[2] = points[0] - Q1_2;
-	points[3] = points[1] - Q2_2;
+	points[0] = previousMotorAngle[0] - (Q1_1); 
+	points[1] = previousMotorAngle[1] - (Q2_1);
+	points[2] = points[0] - (Q1_2);
+	points[3] = points[1] - (Q2_2);
 
 	//previousMotorAngle[0] = points[2];
 	//previousMotorAngle[1] = points[3];
