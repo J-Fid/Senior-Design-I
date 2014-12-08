@@ -199,12 +199,12 @@ void ImageProcessor::thinning(cv::Mat& im){
     cv::Mat prev = cv::Mat::zeros(im.size(), CV_8UC1);
     cv::Mat diff;
 
-    while (cv::countNonZero(diff) > 0){
+    do{
         thinningIteration(im, 0);
         thinningIteration(im, 1);
         cv::absdiff(im, prev, diff);
         im.copyTo(prev);
-    } 
+    } while (cv::countNonZero(diff) > 0);
 
     im *= 255;
 }
