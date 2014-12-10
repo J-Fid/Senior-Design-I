@@ -79,18 +79,22 @@ void loop(){
            break;
          case 'm':
             robot.backMotor+= 10; //moves down and to rightn
+            SetPosition(1,robot.backMotor);
             break; 
             
          case 'n':
             robot.backMotor-= 10; //moves to left in arch
+            SetPosition(1,robot.backMotor);
             break; 
           
            case 'b':
             robot.frontMotor+= 10; //moves down and to rightn
+            SetPosition(2,robot.frontMotor);
             break; 
           
            case 'v':
             robot.frontMotor-= 10; //moves down and to rightn
+            SetPosition(2,robot.frontMotor);
             break; 
             
            case 'a': //coordinates have been sent
