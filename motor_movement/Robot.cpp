@@ -168,8 +168,8 @@ void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 	q2_2 = acos((l1_sqr - l2_sqr + B2_sqr)/(2*l1*B2)); //the law of cosines         
 	Q1_1 = degrees(q2_1) - degrees(q1_1)-45 ;     
 	Q1_2 = degrees(q2_2) - degrees(q1_2)-45 ;                                   
-	Q2_1 = degrees(acos((l1_sqr + l2_sqr - B_sqr)/(2*l1*l2)));//the law of cosines    
-	Q2_2 = degrees(acos((l1_sqr + l2_sqr - B2_sqr)/(2*l1*l2)));//the law of cosines    
+	Q2_1 = degrees(acos((l1_sqr + l2_sqr - B_sqr)/(2*l1*l2)))+45;//the law of cosines    
+	Q2_2 = degrees(acos((l1_sqr + l2_sqr - B2_sqr)/(2*l1*l2)))+45;//the law of cosines    
 
 
 	//for AX-12 servos 0.29 degrees is equal to an increase of 1
@@ -205,12 +205,6 @@ void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 	}
 
 	else {}/**/
-
-
-
-
-
-
 
 
 /**/
