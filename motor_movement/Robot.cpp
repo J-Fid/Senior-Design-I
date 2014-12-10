@@ -19,7 +19,7 @@ Robot::Robot()
 	  bottomRight {762, 98},
 	  deadCenter {684, 233},
 	  relaxed {538, 520},
-	  upOrDown {300, 450},
+	  upOrDown {300, 420},
           prevousCoord {0,0},
           previousMotorAngle{538,520}
 {
