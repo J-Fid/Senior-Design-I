@@ -78,11 +78,10 @@ int main(int argc, char** argv){
 	
 	std::cout << "press any key to quit\n";
 
-	//crashes program vvvvv
-	///////////////////////////
+
 	int c;
 	std::cin >> c; 
-	//////////////////
+
 
 	//shut down robot
 	if(mode == 2){

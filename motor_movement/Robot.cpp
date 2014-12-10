@@ -2,7 +2,7 @@
   Robot.cpp - Library for Robot object to control arm outside of main
   Created November 17, 2014
   Released into the public domain.
-
+*/
 
 
 #include <BioloidController.h>
@@ -18,10 +18,10 @@ Robot::Robot()
 	  bottomLeft {795, 179},
 	  bottomRight {762, 98},
 	  deadCenter {684, 233},
-	  relaxed {538, 520},
-	  upOrDown {300, 450},
+	  relaxed {529, 467},
+	  upOrDown {300, 475},
           prevousCoord {0,0},
-          previousMotorAngle{538,520}
+          previousMotorAngle{529, 467}
 {
 	 //starting coordinates for the motors to position to top left of drawing area
 	 backMotor = relaxed[0];
@@ -133,7 +133,6 @@ void Robot::drawLine(int points[4], BioloidController bioloid)
 
 void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 
-
 	float B = 0.0, B2 = 0.0;            //distance that is needed to move
 	float q1_1= 0.0, q1_2 = 0.0;           //angle between X-axis and line to be drawn
 	float q2_1= 0.0,q2_2 =0.0;           //angle of front motor link l1
@@ -141,39 +140,80 @@ void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 	float Q2_1= 0.0, Q2_2 = 0.0 ;          //Q2: angle between "l1" and "l2"
 	long l1 = 60;          //l1: length first bracket
 	long l2 = 70;         //l2: length of tip bracket
+	long l1_sqr = l1 * l1;
+	long l2_sqr = l2 * l2;
+
+	float X = (points[2] -points[0]);
+	float Y = (points[3] -points[1]);
+	float slope = (Y/X);
 
 
 	//Where the robot is going
 	long Xpos1= 0.0, Xpos2 =0.0;       //x coordinate where the arm should move to
 	long Ypos1= 0.0, Ypos2 =0.0;       //y corrdinate where the arm should move to      
 
-	Xpos1 = abs(points[0]-prevousCoord[0]);     //relative distance to travel on x
-	Ypos1 = abs(points[1]-prevousCoord[1]);     //relative distance to travel on y
-	Xpos2 = abs(points[2]-points[0]);     //relative distance to travel on x
-	Ypos2 = abs(points[3]-points[1]);     //relative distance to travel on y
+	Xpos1 = points[0];     //relative distance to travel on x previous is 0
+	Ypos1 = points[1];     //relative distance to travel on y previous is 0
+	Xpos2 = points[2]-points[0];     //relative distance to travel on x
+	Ypos2 = points[3]-points[1];     //relative distance to travel on y
 
-	B = sqrt(Xpos1*Xpos1 + Ypos1*Ypos1);           //the Pythagorean theorem
-	B2 = sqrt(Xpos2*Xpos2 + Ypos2*Ypos2);           //the Pythagorean theorem
-	q1_1 = atan2(Ypos1,Xpos1);//we should always be in the first quadraint
+	B = sqrt((Xpos1*Xpos1) + (Ypos1*Ypos1));           //the Pythagorean theorem
+	B2 = sqrt((Xpos2*Xpos2) + (Ypos2*Ypos2));          //the Pythagorean theorem
+	long B_sqr = B * B;
+	long B2_sqr = B2 * B2;
+
+	q1_1 = atan2(Ypos1,Xpos1);
 	q1_2 = atan2(Ypos2,Xpos2);
-	q2_1 = acos((l1*l1 - l2*l2 + B*B)/(2*l1*B)); //the law of cosines   
-	q2_2 = acos((l1*l1 - l2*l2 + B2*B2)/(2*l1*B2)); //the law of cosines         
-	Q1_1 = q2_1 - degrees(q1_1);     
-	Q1_2 = q2_2 - degrees(q1_2) ;                                   
-	Q2_1 = degrees(acos((l1*l1 + l2*l2 - B*B)/(2*l1*l2)))+90 ;//the law of cosines    
-	Q2_2 = degrees(acos((l1*l1 + l2*l2 - B2*B2)/(2*l1*l2)));//the law of cosines    
+	q2_1 = acos((l1_sqr - l2_sqr + B_sqr)/(2*l1*B)); //the law of cosines   
+	q2_2 = acos((l1_sqr - l2_sqr + B2_sqr)/(2*l1*B2)); //the law of cosines         
+	Q1_1 = degrees(q2_1) - degrees(q1_1)-45 ;     
+	Q1_2 = degrees(q2_2) - degrees(q1_2)-45 ;                                   
+	Q2_1 = degrees(acos((l1_sqr + l2_sqr - B_sqr)/(2*l1*l2)));//the law of cosines    
+	Q2_2 = degrees(acos((l1_sqr + l2_sqr - B2_sqr)/(2*l1*l2)));//the law of cosines    
+
+
+	//for AX-12 servos 0.29 degrees is equal to an increase of 1
+	float robotAngleConversion = 0.71;
+	if(slope < 0 && Y < 0){//+bm -fm
 	
-	//prevousCoord[0] = points[2];
-	//prevousCoord[0] = points[3];
+		points[0] =  previousMotorAngle[0] + ((int)(Q1_1 / (robotAngleConversion))); //x1
+		points[1] = previousMotorAngle[1] - ((int)(Q2_1 / (robotAngleConversion)));//y1
+		points[2] = points[0] + ((int)(Q1_2 / (robotAngleConversion)));//x2
+		points[3] = points[1] - ((int)(Q2_2 / (robotAngleConversion)));//y2
+		
+	}else if(slope < 0 && X < 0){//-bm +fm
+\
+		points[0] =  previousMotorAngle[0]  - ((int)(Q1_1 / (robotAngleConversion))); //x1
+		points[2] = points[0] - ((int)(Q1_2 / (robotAngleConversion)));//x2
+		points[1] = previousMotorAngle[1] + ((int)(Q2_1 / (robotAngleConversion)));//y1
+		points[3] = points[1] + ((int)(Q2_2 / (robotAngleConversion)));//y2
+		
+	}else if(slope > 0 && (X < 0 && Y<0)){//+bm +fm
 
-	points[0] = previousMotorAngle[0] - (Q1_1); 
-	points[1] = previousMotorAngle[1] - (Q2_1);
-	points[2] = points[0] - (Q1_2);
-	points[3] = points[1] - (Q2_2);
+		points[0] =  previousMotorAngle[0]  + ((int)(Q1_1 / (robotAngleConversion))); //x1
+		points[1] = previousMotorAngle[1] + ((int)(Q2_1 / (robotAngleConversion)));//y1
+		points[2] = points[0] + ((int)(Q1_2 / (robotAngleConversion)));//x2
+		points[3] = points[1] + ((int)(Q2_2 / (robotAngleConversion)));//y2
 
-	//previousMotorAngle[0] = points[2];
-	//previousMotorAngle[1] = points[3];
+	}else if(slope > 0 && (X > 0 && Y > 0)){//-bm -fm
+		
+		points[0] =  previousMotorAngle[0]  - ((int)(Q1_1 / (robotAngleConversion))); //x1
+		points[1] = previousMotorAngle[1] - ((int)(Q2_1 / (robotAngleConversion)));//y1
+		points[2] = points[0] - ((int)(Q1_2 / (robotAngleConversion)));//x2
+		points[3] = points[1] - ((int)(Q2_2 / (robotAngleConversion)));//y2
+		
+	}
 
+	else {}/**/
+
+
+
+
+
+
+
+
+/**/
 Serial.println();
 Serial.println(points[0]);
 Serial.println(points[1]);
@@ -216,5 +256,5 @@ Serial.println();
  delay(50);  
 }
 
-*/
+
 
