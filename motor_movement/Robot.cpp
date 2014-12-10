@@ -2,7 +2,7 @@
   Robot.cpp - Library for Robot object to control arm outside of main
   Created November 17, 2014
   Released into the public domain.
-*/
+
 
 
 #include <BioloidController.h>
@@ -18,8 +18,13 @@ Robot::Robot()
 	  bottomLeft {795, 179},
 	  bottomRight {762, 98},
 	  deadCenter {684, 233},
+<<<<<<< HEAD
 	  relaxed {529, 467},
 	  upOrDown {300, 475},
+=======
+	  relaxed {538, 520},
+	  upOrDown {300, 420},
+>>>>>>> d1968ebab072f732904c188217144b52e9d0c43f
           prevousCoord {0,0},
           previousMotorAngle{529, 467}
 {
@@ -204,10 +209,9 @@ void Robot::InverseKinematics(int points[4]){//points = {x1,y1,x2,y2};
 		
 	}
 
-	else {}/**/
+	else {}*/
 
-
-/**/
+/*
 Serial.println();
 Serial.println(points[0]);
 Serial.println(points[1]);
@@ -251,4 +255,4 @@ Serial.println();
 }
 
 
-
+*/

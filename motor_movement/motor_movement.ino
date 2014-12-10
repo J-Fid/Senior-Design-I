@@ -14,20 +14,19 @@ int previouspoint[2] = {0,0};
 int testPoints[4] = { 5,5,90,90};
 int p, b, num, j;
 
+//triangle arrays
+int t1[4] = {520,538,520,300};
+int t2[4]=  {520,300,738,180};
+int t3[4] = {738,180,520,538};
 
-Robot robot; //MODEL OBJECT
+//super turtle
+int s1[4] = {514,403,514,443};
+int s2[4] = {514,443,584,343};
+int s3[4] = {584,343,584,303};
+int s4[4] = {584,303,654,203};
+int s5[4] = {654,203,664,270};
 
-//super turtle arrays
-int t1[4] = {538,520,534,404};
-int t2[4]= {538,520,684,233};
-int t3[4] = {534,404,684,233};
-int s1[4] = {545,300,545,350};
-int s2[4] = {545,350,675,350};
-int s3[4] = {675,350,645,300};
-int s4[4] = {645,300,695,300};
-int s5[4] = {695,300,695,350};
-
-
+Robot robot; 
 
 void setup(){
     
@@ -43,6 +42,8 @@ void loop(){
 
   delay(50);
   Serial.print(ack);
+  Serial.println(robot.backMotor);
+  Serial.println(robot.frontMotor);
   Serial.flush();
   
    if(Serial.available()>0){
@@ -66,6 +67,9 @@ void loop(){
            
            robot.drawLine(testPoints, bioloid); //TEST LINE WITHOUT PROCESSING
            break;
+           
+         case 'c':
+           robot.toDeadCenter();
          
          case 's': //superTurtle case
            robot.drawLine(t1, bioloid);
