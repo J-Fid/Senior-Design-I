@@ -14,6 +14,16 @@ int previouspoint[2] = {0,0};
 int testPoints[4] = { 50,50,90,90};
 int p, b, num, j;
 
+//super turtle arrays
+int t1[4] = {538,520,534,404};
+int t2[4]= {538,520,684,233};
+int t3[4] = {534,404,684,233};
+int s1[4] = {545,300,545,350};
+int s2[4] = {545,350,675,350};
+int s3[4] = {675,350,645,300};
+int s4[4] = {645,300,695,300};
+int s5[4] = {695,300,695,350};
+
 Robot robot; //TESTING OUT MODEL OBJECT
 
 void setup(){
@@ -54,7 +64,16 @@ void loop(){
            robot.drawLine(testPoints, bioloid); //TEST LINE WITHOUT PROCESSING
            break;
          
-         
+         case 's': //superTurtle case
+           robot.drawLine(t1, bioloid);
+           robot.drawLine(t2, bioloid);
+           robot.drawLine(t3, bioloid);
+           robot.drawLine(s1, bioloid);
+           robot.drawLine(s2, bioloid);
+           robot.drawLine(s3, bioloid);
+           robot.drawLine(s4, bioloid);
+           robot.drawLine(s5, bioloid);
+           break;
          case 'm':
             robot.backMotor+= 10; //moves down and to rightn
             break; 

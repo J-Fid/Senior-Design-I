@@ -2,7 +2,7 @@
   Robot.cpp - Library for Robot object to control arm outside of main
   Created November 17, 2014
   Released into the public domain.
-*/
+
 
 
 #include <BioloidController.h>
@@ -100,7 +100,7 @@ void Robot::toDeadCenter()
 
 void Robot::drawLine(int points[4], BioloidController bioloid)
 {	
-        //InverseKinematics(points); 
+        InverseKinematics(points); 
 	bioloid.poseSize = 2; // load two poses in, one for each vertex
 	bioloid.readPose();//find where the servos are currently
 	penUp();
@@ -215,6 +215,6 @@ Serial.println();
 
  delay(50);  
 }
-
+*/
 
 
