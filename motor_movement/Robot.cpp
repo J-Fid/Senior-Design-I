@@ -2,7 +2,7 @@
   Robot.cpp - Library for Robot object to control arm outside of main
   Created November 17, 2014
   Released into the public domain.
-*/
+
 
 
 #include <BioloidController.h>
@@ -216,5 +216,5 @@ Serial.println();
  delay(50);  
 }
 
-
+*/
 

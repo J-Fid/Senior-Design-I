@@ -29,7 +29,7 @@ int main(int argc, char** argv){
 	//load the image
 	Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	int mode = atoi(argv[2]); 
-	int robotHeight = 75, robotWidth = 110;
+	int robotHeight = 100, robotWidth = 110;
 
 	//if the image is not found, exit program
 	if(img.empty()){
@@ -56,7 +56,6 @@ int main(int argc, char** argv){
 	//write image dimensions to CLI
 	Size imgSize = img.size();
 	printf("Image Dimensions: %i x %i\n", imgSize.width, imgSize.height);
-
 	//use either the drawing simulator or the drawing robot based on the mode parameter
 	drawImageSimulator sim;
 	DrawImageRobot drawingRobot;

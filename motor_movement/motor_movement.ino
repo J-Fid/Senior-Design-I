@@ -11,16 +11,16 @@ char input;
 char buff[5], ack ='0';
 int points[5] ; 
 int previouspoint[2] = {0,0};
-int testPoints[4] = { 50,50,90,90};
+int testPoints[4] = { 5,5,90,90};
 int p, b, num, j;
 
-Robot robot; //TESTING OUT MODEL OBJECT
+Robot robot; //MODEL OBJECT
 
 void setup(){
     
   //robot is already set to topLeft coordinates
     robot.penUp();
-    Serial.begin(9600); //start serial communications at 38400bps
+    Serial.begin(9600); //start serial communications at 960bps
     Relax(1);
     Relax(2);
     Relax(3);
